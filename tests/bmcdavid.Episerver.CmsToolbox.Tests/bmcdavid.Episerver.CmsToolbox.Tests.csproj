@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPiServer.ServiceLocation.StructureMap" Version="2.0.1" />
+    <PackageReference Include="EPiServer.Framework" Version="11.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <ProjectReference Include="..\..\src\CmsToolbox\bmcdavid.Episerver.CmsToolbox.csproj" />
+  </ItemGroup>
+
+</Project>
