@@ -8,7 +8,7 @@
   <PropertyGroup>
     <RootNamespace>bmcdavid.Episerver.CmsToolbox</RootNamespace>
     <TargetFrameworks>net461;</TargetFrameworks>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+    <!--<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>-->
     <PackageId>bmcdavid.Episerver.CmsToolbox.AspNet</PackageId>
     <Authors>Brad McDavid</Authors>
     <Copyright>Copyright $(CurrentYear)</Copyright>
@@ -35,13 +35,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CmsToolbox\bmcdavid.Episerver.CmsToolbox.csproj" PrivateAssets="all" />    
+    <ProjectReference Include="..\CmsToolbox\bmcdavid.Episerver.CmsToolbox.csproj" />    
     <PackageReference Include="EPiServer.CMS.AspNet" Version="[11.1.0,12.0)" />
   </ItemGroup>
   
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
     <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
     </ItemGroup>
   </Target>
 </Project>
