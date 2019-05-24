@@ -15,8 +15,8 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
     /// </summary>
     public class StrategyBasedContentAreaRenderer : ContentAreaRenderer, IContentItemRenderer
     {
-        private readonly TemplateResolver _templateResolver;
         private readonly IDefaultContentStrategy _defaultContentStrategy;
+        private readonly TemplateResolver _templateResolver;
         private IContentAreaItemRenderingStrategy _contentAreaItemRenderingStrategy = null;
         private ITemplateResolverItemStrategy _templateResolverItemStrategy = null;
 
@@ -30,6 +30,21 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
             _templateResolver = templateRepository;
             _defaultContentStrategy = defaultContentStrategy;
         }
+
+        TagBuilder IContentItemRenderer.AddNonEmptyCssClass(TagBuilder tagBuilder, string cssClass) => AddNonEmptyCssClass(tagBuilder, cssClass);
+
+        void IContentItemRenderer.BeforeRenderContentAreaItemStartTag(TagBuilder tagBuilder, ContentAreaItem contentAreaItem) =>
+                    BeforeRenderContentAreaItemStartTag(tagBuilder, contentAreaItem);
+
+        string IContentItemRenderer.GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem) =>
+                    GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
+
+        string IContentItemRenderer.GetContentAreaItemHtmlTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem) =>
+                    GetContentAreaItemHtmlTag(htmlHelper, contentAreaItem);
+
+        string IContentItemRenderer.GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem) => GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
+
+        bool IContentItemRenderer.IsInEditMode(HtmlHelper htmlHelper) => IsInEditMode(htmlHelper);
 
         /// <summary>
         /// Renders content area properties
@@ -60,6 +75,12 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
 
             viewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.EndTag));
         }
+
+        void IContentItemRenderer.RenderContentAreaItem(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem, string templateTag, string htmlTag, string cssClass) =>
+                    RenderContentAreaItem(htmlHelper, contentAreaItem, templateTag, htmlTag, cssClass);
+
+        TemplateModel IContentItemRenderer.ResolveTemplate(HtmlHelper htmlHelper, IContent content, string templateTag) =>
+                    ResolveTemplate(htmlHelper, content, templateTag);
 
         /// <summary>
         /// Enableds strategy based content area item rendering
@@ -103,16 +124,5 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
         private IEnumerable<ContentAreaItem> UnFilteredItems(ContentArea contentArea) => contentArea.Fragments
                 .OfType<ContentFragment>()
                 .Select(f => new ContentAreaItem(f));
-
-        string IContentItemRenderer.GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem) =>
-            GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
-
-        string IContentItemRenderer.GetContentAreaItemHtmlTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem) =>
-            GetContentAreaItemHtmlTag(htmlHelper, contentAreaItem);
-
-        string IContentItemRenderer.GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem) => GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
-
-        void IContentItemRenderer.RenderContentAreaItem(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem, string templateTag, string htmlTag, string cssClass) =>
-            RenderContentAreaItem(htmlHelper, contentAreaItem, templateTag, htmlTag, cssClass);
     }
 }

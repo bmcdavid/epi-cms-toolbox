@@ -1,4 +1,5 @@
 ﻿using EPiServer.Core;
+using EPiServer.DataAbstraction;
 using System.Web.Mvc;
 
 namespace bmcdavid.Episerver.CmsToolbox.Rendering
@@ -8,6 +9,21 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
     /// </summary>
     public interface IContentItemRenderer
     {
+        /// <summary>
+        /// Adds non empty css classes
+        /// </summary>
+        /// <param name="tagBuilder"></param>
+        /// <param name="cssClass"></param>
+        /// <returns></returns>
+        TagBuilder AddNonEmptyCssClass(TagBuilder tagBuilder, string cssClass);
+
+        /// <summary>
+        /// Executes before rendering item
+        /// </summary>
+        /// <param name="tagBuilder"></param>
+        /// <param name="contentAreaItem"></param>
+        void BeforeRenderContentAreaItemStartTag(TagBuilder tagBuilder, ContentAreaItem contentAreaItem);
+
         /// <summary>
         /// Gets css class for content area item
         /// </summary>
@@ -33,6 +49,13 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
         string GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem);
 
         /// <summary>
+        /// Determines if edit mode is enabled
+        /// </summary>
+        /// <param name="htmlHelper"></param>
+        /// <returns></returns>
+        bool IsInEditMode(HtmlHelper htmlHelper);
+
+        /// <summary>
         /// Renders content area item
         /// </summary>
         /// <param name="htmlHelper"></param>
@@ -41,5 +64,14 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
         /// <param name="htmlTag"></param>
         /// <param name="cssClass"></param>
         void RenderContentAreaItem(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem, string templateTag, string htmlTag, string cssClass);
+
+        /// <summary>
+        /// Resolves a template for given content and tag
+        /// </summary>
+        /// <param name="htmlHelper"></param>
+        /// <param name="content"></param>
+        /// <param name="templateTag"></param>
+        /// <returns></returns>
+        TemplateModel ResolveTemplate(HtmlHelper htmlHelper, IContent content, string templateTag);
     }
 }

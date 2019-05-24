@@ -14,12 +14,12 @@ namespace bmcdavid.Episerver.CmsToolbox.Rendering
         /// </summary>
         /// <param name="htmlHelper"></param>
         /// <param name="contentAreaItems"></param>
-        /// <param name="contentRenderItemRenderer"></param>
+        /// <param name="contentItemRenderer"></param>
         void RenderContentAreaItems
         (
             HtmlHelper htmlHelper,
             IEnumerable<ContentAreaItem> contentAreaItems,
-            IContentItemRenderer contentRenderItemRenderer
+            IContentItemRenderer contentItemRenderer
         );
     }
 }
